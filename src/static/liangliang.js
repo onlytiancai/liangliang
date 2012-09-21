@@ -36,7 +36,7 @@ var liangliang = liangliang || {};
                     t.complete("success");
                 },
                 failure: function(msg){
-                    t.complete("failure", msg);
+                    t.complete("success", msg ? msg : 'faild');
                 }
             }
                 
@@ -56,7 +56,6 @@ var liangliang = liangliang || {};
         $('#result').append(html);
     }));
 
-
     var run = function(){
         var AllTaskAsync = eval(Wind.compile("async", function() {
             for (var i in tests){
@@ -68,8 +67,6 @@ var liangliang = liangliang || {};
         AllTaskAsync().start();
     };
 
-    liangliang.await_timeout = await_timeout;
-    liangliang.tests = tests;
     liangliang.define_test = define_test;
     liangliang.run = run;
 })();

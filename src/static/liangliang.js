@@ -27,7 +27,7 @@ var liangliang = liangliang || {};
     };
 
     var TestTask = eval(Wind.compile("async", function(test) {
-        var frm = $('#frm_test'), html = '', result = null;
+        var frm = $('#frm_test'), result = null;
 
         var task_wraper = Wind.Async.Task.create(function (t){
             var win = frm[0].contentWindow;
@@ -47,26 +47,27 @@ var liangliang = liangliang || {};
         $await(Wind.Async.onEvent(frm[0], "load"));
         try{
             result = $await(await_timeout(task_wraper, test.timeout));
-            html = test.suite + '(' + test.name + '):' + (result == undefined? 'ok': result) + '\r\n';
+            test.test_result = result == undefined ? 'ok': result;
         }
         catch(e){
-            html = test.suite + '(' + test.name + ')error:' + e.message + '\r\n';
+            test.test_result = e.message;
         }
 
-        $('#result').append(html);
     }));
 
-    var run = function(){
+    var run = function(selected_tests, complete){
         var AllTaskAsync = eval(Wind.compile("async", function() {
-            for (var i in tests){
-                var test_case = tests[i];
+            for (var i in selected_tests){
+                var test_case = selected_tests[i];
                 $await(TestTask(test_case));
             }
+            complete();
         }));
 
         AllTaskAsync().start();
     };
 
     liangliang.define_test = define_test;
+    liangliang.tests = tests;
     liangliang.run = run;
 })();

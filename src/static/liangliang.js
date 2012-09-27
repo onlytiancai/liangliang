@@ -1,3 +1,26 @@
+(function($){
+    $.fn.extend({
+        locationchange: function(win, callback) {
+            var sh = null
+            var checkLocation = function(win){
+                var curlocation = win.location.href;
+                var inner = function(){
+                    if (win.location.href != curlocation){
+                        clearInterval(sh);
+                        $(window).trigger('locationchange');
+                        curlocation = win.location.href;
+                    }
+                };
+                return inner;
+            };
+
+            $(window).one('locationchange', callback);
+            sh = setInterval(checkLocation(win), 1000);
+        }
+    });
+})(jQuery);
+
+
 var liangliang = liangliang || {};
 
 (function(){
@@ -27,6 +50,7 @@ var liangliang = liangliang || {};
     };
 
     var TestTask = eval(Wind.compile("async", function(test) {
+        $('.test_info').html(test.suite +':'+ test.name + '...');
         var frm = $('#frm_test'), result = null;
 
         var task_wraper = Wind.Async.Task.create(function (t){
@@ -57,10 +81,12 @@ var liangliang = liangliang || {};
 
     var run = function(selected_tests, complete){
         var AllTaskAsync = eval(Wind.compile("async", function() {
+            $('.test_info').show();
             for (var i in selected_tests){
                 var test_case = selected_tests[i];
                 $await(TestTask(test_case));
             }
+            $('.test_info').html('测试完毕');
             complete();
         }));
 

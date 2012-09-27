@@ -11,11 +11,14 @@
         <div class="navbar">
             <div class="navbar-inner">
                 <a class="brand" href="#">自动化测试</a>
-                <button class="btn select_all">Select All</button>
-                <button class="btn start_test">Start Test</button>
+                <button class="btn select_all ">Select All</button>
+                <button class="btn start_test ">Start Test</button>
             </div>
         </div>
 
+        <div class="alert alert-info test_info hide">
+        </div>
+        
         <div class="row-fluid">
             <div class="span2 silder">
             </div>
@@ -31,9 +34,19 @@
     </div>
     <script id="tpl-result" type="text/template">
         <p>总用例数:{{total_count}}</p>        
+        <p>未测试用例数:{{faild_count}}</p>
+        <p>失败用例数:{{faild_count}}</p>        
+        <ul>
+            {{#faild_tests}}
+            <li>{{suite}}-{{name}}</li>
+            {{/faild_tests}}
+        </ul>
         <p>已通过用例数:{{ok_count}}</p>        
-        <p>未通过用例数:{{faild_count}}</p>        
-        <p>未测试用例数:{{faild_count}}</p>        
+        <ul>
+            {{#ok_tests}}
+            <li>{{suite}}-{{name}}</li>
+            {{/ok_tests}}
+        </ul>
     </script>
     <script id="tpl-suites" type="text/template">
         <h5>测试用例集</h5>
@@ -57,6 +70,7 @@
     <script src="libs/wind-all-0.7.3.js"></script>
     <script src="static/liangliang.js"></script>
     <script src="test_cases/testcase1.js"></script>
+    <script src="test_cases/dnspodcase.js"></script>
     <script src="static/main.js"></script>
 </body>
 </html>

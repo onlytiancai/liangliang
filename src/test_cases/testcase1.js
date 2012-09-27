@@ -1,6 +1,10 @@
 (function(){
     var define_test = liangliang.define_test;
 
+    $(window).locationchange($('#frm_test')[0].contentWindow, function(){
+        console.log($('#frm_test')[0].contentWindow.location.href); 
+    })
+
     define_test('simple test', 'test_cases/betest.html')
     .action(function(win, t) {
         var $ = win.$;

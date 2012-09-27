@@ -63,6 +63,7 @@ $(function(){
             $('.row-fluid .result .well').html(html);
         };
 
+        $('.row-fluid .result .well').html('');
         liangliang.run(selected_tests, when_test_complete);
     };
 
